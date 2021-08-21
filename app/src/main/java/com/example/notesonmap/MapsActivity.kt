@@ -3,24 +3,21 @@ package com.example.notesonmap
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-
+import com.example.notesonmap.databinding.ActivityMapsBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.example.notesonmap.databinding.ActivityMapsBinding
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -28,10 +25,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, ActivityCompat.OnR
     private lateinit var binding: ActivityMapsBinding
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var lastKnownLocation: Location? = null
+    private var cameraPosition: CameraPosition? = null
     private val defaultLocation = LatLng(-33.8523341, 151.2106085)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (savedInstanceState != null) {
+            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+        }
 
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -56,12 +59,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, ActivityCompat.OnR
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
         getLocationPermission()
         getDeviceLocation()
+        lastKnownLocation?.apply {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                LatLng(latitude, longitude), DEFAULT_ZOOM.toFloat()))
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putParcelable(KEY_CAMERA_POSITION, mMap.cameraPosition)
+        outState.putParcelable(KEY_LOCATION, lastKnownLocation)
+        super.onSaveInstanceState(outState)
     }
 
     @SuppressLint("MissingPermission")
@@ -139,5 +148,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, ActivityCompat.OnR
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
         private const val DEFAULT_ZOOM = 15
+        private const val KEY_CAMERA_POSITION = "camera_position"
+        private const val KEY_LOCATION = "location"
     }
 }
