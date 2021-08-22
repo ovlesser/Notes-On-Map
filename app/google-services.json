@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "438102570803",
+    "firebase_url": "https://primeval-beaker-318100-default-rtdb.firebaseio.com",
+    "project_id": "primeval-beaker-318100",
+    "storage_bucket": "primeval-beaker-318100.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438102570803:android:36fe7fac188a692b92f046",
+        "android_client_info": {
+          "package_name": "com.example.landmarkremark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "438102570803-qf0ve4rb5gr497m2ovgtd3956rbrf1t6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhVOXMlZtUgeeLQgnmFhzSNOHg0i4HcKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "438102570803-qf0ve4rb5gr497m2ovgtd3956rbrf1t6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438102570803:android:2d7fe5eb6a4c512292f046",
+        "android_client_info": {
+          "package_name": "com.example.notesonmap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "438102570803-qf0ve4rb5gr497m2ovgtd3956rbrf1t6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhVOXMlZtUgeeLQgnmFhzSNOHg0i4HcKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "438102570803-qf0ve4rb5gr497m2ovgtd3956rbrf1t6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
