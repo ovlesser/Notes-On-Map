@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.notesonmap.data.Note
 import com.example.notesonmap.databinding.ActivityMapsBinding
@@ -78,11 +79,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, ActivityCompat.OnR
         mMap.setOnMapLongClickListener { latLng -> showNoteDetail(null, latLng)}
         getLocationPermission()
         getDeviceLocation()
-        lastKnownLocation?.apply {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                LatLng(latitude, longitude), DEFAULT_ZOOM.toFloat()))
-        }
+//        lastKnownLocation?.apply {
+//            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+//                LatLng(latitude, longitude), DEFAULT_ZOOM.toFloat()))
+//        }
         updateUI()
+        notesViewModel.notes.observe(this, Observer {
+            if (it != null) {
+                updateUI()
+            }
+        })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
